@@ -9,6 +9,7 @@
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 (require 'package)
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
+			 ("melpa-stable" . "https://stable.melpa.org/packages/") 
 			 ("org" . "https://orgmode.org/elpa/")
 			 ("elpa" . "https://elpa.gnu.org/packages/")))
 (package-initialize)
@@ -28,6 +29,8 @@
   (load-theme 'kanagawa-wave t))
 
 (use-package swiper :ensure t)
+(use-package eglot :ensure t)
+ (add-hook 'go-mode-hook #'eglot-ensure)
 (use-package ivy
   :diminish
   :bind (("C-f" . swiper)
@@ -45,7 +48,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages '(ivy)))
+ '(package-selected-packages '(go-complete eglot go-mode ivy)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
