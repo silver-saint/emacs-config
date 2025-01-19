@@ -21,16 +21,24 @@
 
 (require 'use-package)
 (setq use-package-always-ensure t)
-
+(set-face-attribute 'default nil :height 130)
 ;;themes
 (use-package kanagawa-themes
   :ensure t
   :config
   (load-theme 'kanagawa-wave t))
 
+
+(column-number-mode)
+(global-display-line-numbers-mode t)
+(dolist (mode '(org-mode-hook
+                term-mode-hook
+		eshell-mode-hook))
+  (add-hook mode (lambda () (display-line-numbers-mode 0))))
 (use-package swiper :ensure t)
 (use-package eglot :ensure t)
- (add-hook 'go-mode-hook #'eglot-ensure)
+(add-hook 'go-mode-hook #'eglot-ensure)
+(add-hook 'c-mode-hook 'lsp)
 (use-package ivy
   :diminish
   :bind (("C-f" . swiper)
@@ -43,6 +51,12 @@
 	 ("C-d" . ivy-reverse-i-search-kill))
   :config
   (ivy-mode 1))
+
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1)
+  :custom ((doom-modeline-height 15)))
+ 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
