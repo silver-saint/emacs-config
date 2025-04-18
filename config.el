@@ -27,6 +27,7 @@
   :config
   (load-theme 'kanagawa-wave t))
 
+;;(global-font-lock-mode 1)
 
 (column-number-mode)
 (global-display-line-numbers-mode t)
@@ -35,9 +36,13 @@
 		eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 (use-package swiper :ensure t)
-(use-package eglot :ensure t)
-(add-hook 'go-mode-hook #'eglot-ensure)
-(add-hook 'c-mode-hook 'lsp)
+(use-package eglot
+  :ensure t
+  :hook ((c++-mode . eglot-ensure)
+	 (c-mode . eglot-ensure)))
+
+(setq eglot-server-programs '((c++-mode . ("clangd"))
+                              (c-mode . ("clangd"))))
 (use-package ivy
   :diminish
   :bind (("C-f" . swiper)
